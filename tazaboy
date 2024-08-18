@@ -1,0 +1,88 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       main.cpp                                                  */
+/*    Author:       VEX                                                       */
+/*    Created:      Thu Sep 26 2019                                           */
+/*    Description:  Competition Template                                      */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Vision10             vision        10              
+// Motor1               motor         1               
+// Motor2               motor         2               
+// Motor3               motor         3               
+// Motor9               motor         9               
+// ---- END VEXCODE CONFIGURED DEVICES ----
+
+#include "vex.h"
+
+using namespace vex;
+
+// A global instance of competition
+competition Competition;
+
+
+
+void autonomous(void) {
+ 
+}
+
+
+void usercontrol(void) {
+  // User control code here, inside the loop
+  while (1) {
+
+    
+if(Vision10.takeSnapshot(Vision10__REDOBS) == true){
+      wait(0.7,sec);
+       Motor1.spinFor(reverse, 70,degrees);
+        Motor1.spinFor(forward, 90 ,degrees);
+      
+
+    }else{
+       
+      Motor1.stop();
+    }
+   
+   
+   
+    if( Vision10.takeSnapshot(Vision10__BLUEOBS) == true){
+    wait(0.7,sec);
+       Motor1.spinFor(reverse, 70,degrees);
+        Motor1.spinFor(forward, 90 ,degrees);
+  }
+  else{
+      Motor2.stop();
+    }
+   Motor3.setVelocity(100,pct);
+ 
+  if(Vision10.takeSnapshot(Vision10__BANANA) == true){
+      wait(0.7,sec);
+       Motor1.spinFor(reverse, 70,degrees);
+        Motor1.spinFor(forward, 90 ,degrees);
+    }
+   
+    }
+    
+}
+  
+   
+  
+
+//
+// Main will set up the competition functions and callbacks.
+//
+int main() {
+  // Set up callbacks for autonomous and driver control periods.
+  Competition.autonomous(autonomous);
+  Competition.drivercontrol(usercontrol);
+
+  // Prevent main from exiting with an infinite loop.
+  while (true) {
+    wait(100, msec);
+  }
+}
